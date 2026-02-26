@@ -2,7 +2,7 @@
 
 An async, lightweight project reporting tool for Azure SDK leadership.
 
-📊 **[View the Dashboard](https://azure.github.io/azure-sdk-status/reporting/)**
+📊 **[View the Dashboard](https://mrjustinb.github.io/CoreAI-Cloud-Apps-Tools-Status/reporting/)**
 
 ## Overview
 
@@ -17,7 +17,7 @@ Teams update a simple JSON file and leadership can view a prioritized dashboard 
 
 | Link | Purpose |
 |------|---------|
-| [📊 Dashboard](https://azure.github.io/azure-sdk-status/reporting/) | View project status (GitHub Pages) |
+| [📊 Dashboard](https://mrjustinb.github.io/CoreAI-Cloud-Apps-Tools-Status/reporting/) | View project status (GitHub Pages) |
 | [📝 Submit Update](../../issues/new?template=project-update.yml) | Update your project via form (no Git needed) |
 | [📋 Edit JSON](reporting/data/projects.json) | Edit project data directly |
 | [📜 Governance](reporting/GOVERNANCE.md) | Operating model and policies |

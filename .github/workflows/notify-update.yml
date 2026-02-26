@@ -8,7 +8,7 @@ on:
       - 'reporting/data/projects.json'
 
 env:
-  DASHBOARD_URL: https://azure.github.io/azure-sdk-status/reporting/
+  DASHBOARD_URL: https://mrjustinb.github.io/CoreAI-Cloud-Apps-Tools-Status/reporting/
 
 jobs:
   notify:
