@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["lastUpdated", "projects"],
+  "properties": {
+    "lastUpdated": {
+      "type": "string"
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "team",
+          "engLead",
+          "pmLead",
+          "priority",
+          "status",
+          "visibility",
+          "externalRoadmap",
+          "updateFrequency",
+          "updatedAt",
+          "summary"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "team": { "type": "string" },
+          "engLead": { "type": "string" },
+          "pmLead": { "type": "string" },
+          "priority": { "type": "integer" },
+          "prioritySetBy": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["on-track", "at-risk", "needs-attention"]
+          },
+          "visibility": {
+            "type": "string",
+            "enum": ["internal", "public"]
+          },
+          "externalRoadmap": { "type": "boolean" },
+          "updateFrequency": {
+            "type": "string",
+            "enum": ["weekly", "biweekly", "monthly"]
+          },
+          "updatedAt": { "type": "string" },
+          "summary": { "type": "string" },
+          "milestones": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "date", "status"],
+              "properties": {
+                "name": { "type": "string" },
+                "date": { "type": "string" },
+                "status": {
+                  "type": "string",
+                  "enum": ["completed", "in-progress", "upcoming", "planned", "at-risk"]
+                }
+              }
+            }
+          },
+          "impacts": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "risks": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "valueDelivered": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "helpNeeded": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

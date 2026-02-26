@@ -1,0 +1,302 @@
+{
+  "lastUpdated": "2026-02-26",
+  "projects": [
+    {
+      "id": "typespec-evolution",
+      "name": "TypeSpec Evolution",
+      "team": "Azure SDK Tools",
+      "engLead": "Laurent Mazuel",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "monthly",
+      "priority": 1,
+      "status": "on-track",
+      "updatedAt": "2026-02-20",
+      "summary": "Evolving TypeSpec to support broader API description scenarios across Azure services.",
+      "impacts": [
+        "Reduced API onboarding time from 4 weeks to 1 week for 12 partner teams",
+        "3 new Azure services adopted TypeSpec this quarter"
+      ],
+      "risks": [
+        "Dependency on partner team bandwidth for migration — need executive alignment"
+      ],
+      "valueDelivered": [
+        "TypeSpec-to-OpenAPI v3.1 converter shipped to Azure Storage team",
+        "New onboarding guide reduced partner ramp-up by 75%"
+      ],
+      "helpNeeded": [
+        "Executive support to prioritize partner team migration timelines"
+      ],
+      "milestones": [
+        { "name": "OpenAPI v3.1 converter GA", "date": "2026-04-15", "status": "in-progress" },
+        { "name": "Full data-plane migration", "date": "2026-07-01", "status": "planned" }
+      ]
+    },
+    {
+      "id": "ai-sdk-agent",
+      "name": "Azure SDK AI Agent Integration",
+      "team": "Cross-Language",
+      "engLead": "TBD",
+      "pmLead": "Ronnie Geraghty",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "monthly",
+      "priority": 2,
+      "status": "at-risk",
+      "updatedAt": "2026-02-18",
+      "summary": "Adding first-class AI agent support to Azure SDK across all languages.",
+      "impacts": [
+        "Early preview adopted by 5 internal teams building copilot experiences"
+      ],
+      "risks": [
+        "Python and .NET implementations diverging — need architectural alignment",
+        "Blocked on OpenAI API stabilization for streaming interfaces"
+      ],
+      "valueDelivered": [
+        "Agent framework preview SDK released for Python and .NET",
+        "Streaming response support shipped in JavaScript SDK"
+      ],
+      "helpNeeded": [
+        "Cross-org alignment meeting with Azure AI team on shared interfaces"
+      ],
+      "milestones": [
+        { "name": "Python/NET alignment", "date": "2026-03-30", "status": "at-risk" },
+        { "name": "Public preview", "date": "2026-05-15", "status": "planned" }
+      ]
+    },
+    {
+      "id": "sdk-perf-improvements",
+      "name": "SDK Performance Improvements",
+      "team": ".NET / Java",
+      "engLead": "TBD",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": false,
+      "updateFrequency": "monthly",
+      "priority": 3,
+      "status": "on-track",
+      "updatedAt": "2026-02-22",
+      "summary": "Systematic performance improvements across .NET and Java SDKs for high-throughput scenarios.",
+      "impacts": [
+        "P95 latency reduced by 30% in Azure Storage .NET SDK",
+        "Java SDK memory allocation cut by 40% in Event Hubs hot path"
+      ],
+      "risks": [],
+      "valueDelivered": [
+        "New connection pooling shipped in .NET SDK — 2x throughput for Storage clients",
+        "Event Hubs Java SDK hot-path optimization released in v5.18"
+      ],
+      "helpNeeded": [],
+      "milestones": [
+        { "name": "Connection pooling benchmarks", "date": "2026-03-15", "status": "upcoming" },
+        { "name": "v5.19 Java SDK release", "date": "2026-04-01", "status": "planned" }
+      ]
+    },
+    {
+      "id": "python-async-overhaul",
+      "name": "Python SDK Async Overhaul",
+      "team": "Python",
+      "engLead": "TBD",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": false,
+      "updateFrequency": "monthly",
+      "priority": 4,
+      "status": "needs-attention",
+      "updatedAt": "2026-02-15",
+      "summary": "Modernizing the Python SDK async patterns to align with current Python best practices.",
+      "impacts": [
+        "Customer satisfaction scores improved in early preview feedback"
+      ],
+      "risks": [
+        "Breaking changes require careful migration guidance for existing customers"
+      ],
+      "valueDelivered": [
+        "New async API surface released in preview for 3 partner teams"
+      ],
+      "helpNeeded": [
+        "Need PM support for customer migration communication plan"
+      ],
+      "milestones": [
+        { "name": "Migration guide published", "date": "2026-03-30", "status": "upcoming" },
+        { "name": "GA release", "date": "2026-06-01", "status": "planned" }
+      ]
+    },
+    {
+      "id": "autorest-deprecation",
+      "name": "AutoRest Deprecation",
+      "team": "Azure SDK Tools",
+      "engLead": "Laurent Mazuel",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "monthly",
+      "priority": 5,
+      "status": "on-track",
+      "updatedAt": "2026-02-26",
+      "summary": "Gradual deprecation of AutoRest as services migrate to TypeSpec. Long-tail effort with external customer impact.",
+      "impacts": [
+        "Pinned deprecation issue in AutoRest repo received first external customer inquiry"
+      ],
+      "risks": [
+        "Long-tail — deprecation won't complete when conversions finish"
+      ],
+      "valueDelivered": [],
+      "helpNeeded": [],
+      "milestones": [
+        { "name": "Deprecation notice published", "date": "2026-02-25", "status": "completed" },
+        { "name": "First services fully migrated off", "date": "2026-06-01", "status": "planned" }
+      ]
+    },
+    {
+      "id": "azure-mcp",
+      "name": "Azure MCP",
+      "team": "Cross-Team",
+      "engLead": "Josh",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "biweekly",
+      "priority": 6,
+      "status": "on-track",
+      "updatedAt": "2026-02-26",
+      "summary": "Azure MCP server providing AI agent tooling for Azure services. Fast-moving project with multiple releases per week.",
+      "impacts": [],
+      "risks": [],
+      "valueDelivered": [],
+      "helpNeeded": [],
+      "milestones": []
+    },
+    {
+      "id": "azure-sdk-skills",
+      "name": "Azure SDK Skills",
+      "team": "Cross-Team",
+      "engLead": "Kay",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "monthly",
+      "priority": 7,
+      "status": "on-track",
+      "updatedAt": "2026-02-26",
+      "summary": "Copilot skills for Azure SDK, published to public skills repo and packaged as CLI plugin. Integrated with Azure MCP.",
+      "impacts": [],
+      "risks": [],
+      "valueDelivered": [],
+      "helpNeeded": [],
+      "milestones": []
+    },
+    {
+      "id": "gh-copilot-azure",
+      "name": "GitHub Copilot for Azure",
+      "team": "Kay's Team",
+      "engLead": "Kay",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "monthly",
+      "priority": 8,
+      "status": "on-track",
+      "updatedAt": "2026-02-26",
+      "summary": "VS Code extension and CLI plugin for Azure-focused Copilot experiences. Source in ADO.",
+      "impacts": [],
+      "risks": [],
+      "valueDelivered": [],
+      "helpNeeded": [],
+      "milestones": []
+    },
+    {
+      "id": "sdk-tools-agent",
+      "name": "Azure SDK Tools Agent",
+      "team": "Azure SDK Tools",
+      "engLead": "TBD",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "internal",
+      "externalRoadmap": false,
+      "updateFrequency": "monthly",
+      "priority": 9,
+      "status": "on-track",
+      "updatedAt": "2026-02-26",
+      "summary": "Internal chatbot/agent for Azure SDK team workflows and automation.",
+      "impacts": [],
+      "risks": [],
+      "valueDelivered": [],
+      "helpNeeded": [],
+      "milestones": []
+    },
+    {
+      "id": "apiview-copilot",
+      "name": "API View Copilot",
+      "team": "Azure SDK Tools",
+      "engLead": "TBD",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "internal",
+      "externalRoadmap": false,
+      "updateFrequency": "monthly",
+      "priority": 10,
+      "status": "on-track",
+      "updatedAt": "2026-02-26",
+      "summary": "Copilot integration for API View tool, helping with API review and design feedback.",
+      "impacts": [],
+      "risks": [],
+      "valueDelivered": [],
+      "helpNeeded": [],
+      "milestones": []
+    },
+    {
+      "id": "java-vnext",
+      "name": "Java vNext (Unbranded Core)",
+      "team": "Java",
+      "engLead": "Jonathan Jones",
+      "pmLead": "Sandeep",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": false,
+      "updateFrequency": "monthly",
+      "priority": 11,
+      "status": "on-track",
+      "updatedAt": "2026-02-26",
+      "summary": "Moving unbranded core to GA and migrating Azure libraries on top. Removes problematic sync stack. Storage data plane is first target.",
+      "impacts": [],
+      "risks": [
+        "Push-pull tension — Jonathan wants broad adoption but needs to sequence carefully"
+      ],
+      "valueDelivered": [],
+      "helpNeeded": [],
+      "milestones": [
+        { "name": "Storage data plane on unbranded core", "date": "2026-06-01", "status": "planned" }
+      ]
+    },
+    {
+      "id": "engsys",
+      "name": "Engineering System (EngSys)",
+      "team": "EngSys",
+      "engLead": "Scott K",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "internal",
+      "externalRoadmap": false,
+      "updateFrequency": "monthly",
+      "priority": 12,
+      "status": "on-track",
+      "updatedAt": "2026-02-26",
+      "summary": "Cross-cutting engineering system supporting all Azure SDK teams. Quarterly visibility requested by multiple stakeholders.",
+      "impacts": [],
+      "risks": [],
+      "valueDelivered": [],
+      "helpNeeded": [],
+      "milestones": []
+    }
+  ]
+}

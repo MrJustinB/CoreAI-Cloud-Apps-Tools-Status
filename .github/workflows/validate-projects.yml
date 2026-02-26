@@ -1,0 +1,31 @@
+name: Validate Projects JSON
+
+on:
+  pull_request:
+    paths:
+      - 'reporting/data/projects.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate JSON against schema
+        run: |
+          npm install ajv
+          node -e "
+            const Ajv = require('ajv');
+            const fs = require('fs');
+            const ajv = new Ajv({allErrors: true});
+            const schema = JSON.parse(fs.readFileSync('reporting/data/projects.schema.json'));
+            const data = JSON.parse(fs.readFileSync('reporting/data/projects.json'));
+            const valid = ajv.validate(schema, data);
+            if (!valid) { console.error(ajv.errors); process.exit(1); }
+            console.log('Schema validation passed');
+          "

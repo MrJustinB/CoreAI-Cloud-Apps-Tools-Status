@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Azure SDK — Project Status Dashboard</title>
+  <style>
+    :root {
+      --color-on-track: #2da44e;
+      --color-at-risk: #d1242f;
+      --color-needs-attention: #bf8700;
+      --color-bg: #f6f8fa;
+      --color-card: #ffffff;
+      --color-border: #d0d7de;
+      --color-text: #1f2328;
+      --color-muted: #656d76;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+      padding: 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 1rem;
+    }
+
+    header h1 { font-size: 1.6rem; font-weight: 600; }
+
+    header p {
+      color: var(--color-muted);
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    .legend {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .dot.on-track { background: var(--color-on-track); }
+    .dot.at-risk { background: var(--color-at-risk); }
+    .dot.needs-attention { background: var(--color-needs-attention); }
+
+    .project-card {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .project-card .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .priority-badge {
+      background: var(--color-text);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .project-card h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .status-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .status-label.on-track { background: #dafbe1; color: var(--color-on-track); }
+    .status-label.at-risk { background: #ffebe9; color: var(--color-at-risk); }
+    .status-label.needs-attention { background: #fff8c5; color: var(--color-needs-attention); }
+
+    .team-label {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+    }
+
+    .leads-label {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+    }
+
+    .badges {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.25rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .badge.public { background: #ddf4ff; color: #0969da; }
+    .badge.internal { background: #eaeef2; color: var(--color-muted); }
+    .badge.ext-roadmap { background: #fbefff; color: #8250df; }
+
+    .project-summary {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .info-section h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .info-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .info-section li {
+      font-size: 0.85rem;
+      padding: 0.2rem 0;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .info-section li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--color-muted);
+    }
+
+    .info-section.impacts li::before { color: var(--color-on-track); }
+    .info-section.risks li::before { color: var(--color-at-risk); }
+    .info-section.value-delivered li::before { color: #8250df; }
+    .info-section.help li::before { color: var(--color-needs-attention); }
+
+    .empty { color: var(--color-muted); font-size: 0.85rem; font-style: italic; }
+
+    .updated-at {
+      font-size: 0.75rem;
+      color: var(--color-muted);
+      margin-top: 0.75rem;
+      text-align: right;
+    }
+
+    #loading {
+      text-align: center;
+      padding: 4rem 0;
+      color: var(--color-muted);
+    }
+
+    #error {
+      text-align: center;
+      padding: 2rem;
+      color: var(--color-at-risk);
+      display: none;
+    }
+
+    footer {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--color-border);
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      text-align: center;
+    }
+
+    footer a { color: var(--color-muted); }
+
+    .summary-bar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      background: var(--color-card);
+      font-size: 0.85rem;
+    }
+
+    .stat-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-right: 1px solid var(--color-border);
+    }
+
+    .stat-box:last-child { border-right: none; }
+
+    .stat-box .stat-value {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .stat-box .stat-label {
+      font-size: 0.7rem;
+      color: var(--color-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .badge.stale { background: #fff8c5; color: var(--color-needs-attention); }
+
+    .controls-bar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    .controls-bar label {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.85rem;
+      color: var(--color-muted);
+    }
+
+    .controls-bar select, .controls-bar input[type="checkbox"] {
+      font-size: 0.85rem;
+      padding: 0.2rem 0.4rem;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      background: var(--color-card);
+    }
+
+    .roadmap {
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      background: var(--color-card);
+    }
+
+    .roadmap h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .roadmap-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.3rem 0;
+      font-size: 0.85rem;
+    }
+
+    .roadmap-date {
+      width: 90px;
+      flex-shrink: 0;
+      color: var(--color-muted);
+      text-align: right;
+      font-size: 0.8rem;
+    }
+
+    .roadmap-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .roadmap-dot.completed { background: var(--color-on-track); }
+    .roadmap-dot.in-progress { background: #0969da; }
+    .roadmap-dot.upcoming { background: #8250df; }
+    .roadmap-dot.planned { background: #8c959f; }
+    .roadmap-dot.at-risk { background: var(--color-at-risk); }
+
+    .roadmap-label {
+      flex: 1;
+    }
+
+    .roadmap-label .roadmap-project {
+      color: var(--color-muted);
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📊 Azure SDK — Project Status</h1>
+    <p>Async status dashboard — updated by teams, consumed by leadership</p>
+  </header>
+
+  <div class="legend">
+    <span class="legend-item"><span class="dot on-track"></span> On Track</span>
+    <span class="legend-item"><span class="dot at-risk"></span> At Risk</span>
+    <span class="legend-item"><span class="dot needs-attention"></span> Needs Attention</span>
+  </div>
+
+  <div id="summary" class="summary-bar" style="display:none;"></div>
+
+  <div class="controls-bar">
+    <label>Status:
+      <select id="filter-status">
+        <option value="all">All</option>
+        <option value="on-track">On Track</option>
+        <option value="at-risk">At Risk</option>
+        <option value="needs-attention">Needs Attention</option>
+      </select>
+    </label>
+    <label>Visibility:
+      <select id="filter-visibility">
+        <option value="all">All</option>
+        <option value="public">Public</option>
+        <option value="internal">Internal</option>
+      </select>
+    </label>
+    <label>
+      <input type="checkbox" id="filter-ext-roadmap"> External Roadmap Only
+    </label>
+    <label>Sort:
+      <select id="sort-by">
+        <option value="priority">Priority</option>
+        <option value="updated">Last Updated</option>
+      </select>
+    </label>
+  </div>
+
+  <div id="roadmap" class="roadmap" style="display:none;">
+    <h2>📅 Milestone Roadmap</h2>
+    <div id="roadmap-items"></div>
+  </div>
+
+  <div id="loading">Loading projects…</div>
+  <div id="error">Failed to load project data. Please check <code>data/projects.json</code>.</div>
+  <main id="dashboard"></main>
+
+  <footer>
+    Edit project data in <a href="data/projects.json"><code>data/projects.json</code></a> — changes go live on merge.
+  </footer>
+
+  <script>
+    const STATUS_LABELS = {
+      'on-track': 'On Track',
+      'at-risk': 'At Risk',
+      'needs-attention': 'Needs Attention'
+    };
+
+    const FREQ_DAYS = { monthly: 30, biweekly: 14, weekly: 7 };
+
+    let allProjects = [];
+
+    function isStale(project) {
+      if (!project.updatedAt || !project.updateFrequency) return false;
+      const freq = project.updateFrequency.toLowerCase();
+      const thresholdDays = FREQ_DAYS[freq];
+      if (!thresholdDays) return false;
+      const updated = new Date(project.updatedAt);
+      const now = new Date();
+      const diffDays = (now - updated) / (1000 * 60 * 60 * 24);
+      return diffDays > thresholdDays;
+    }
+
+    function renderList(items, emptyText) {
+      if (!items || items.length === 0) {
+        return `<p class="empty">${emptyText}</p>`;
+      }
+      return '<ul>' + items.map(i => `<li>${escapeHtml(i)}</li>`).join('') + '</ul>';
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function renderProject(project) {
+      const statusClass = project.status || 'on-track';
+      const statusText = STATUS_LABELS[statusClass] || statusClass;
+      const stale = isStale(project);
+
+      return `
+        <article class="project-card">
+          <div class="card-header">
+            <span class="priority-badge">${project.priority}</span>
+            <h2>${escapeHtml(project.name)}</h2>
+            <span class="status-label ${statusClass}">${statusText}</span>
+            ${stale ? '<span class="badge stale">⏰ STALE</span>' : ''}
+          </div>
+          <p class="team-label">${escapeHtml(project.team)}</p>
+          ${(project.engLead && project.engLead !== 'TBD') || (project.pmLead && project.pmLead !== 'TBD') ? `<p class="leads-label">Eng: ${escapeHtml(project.engLead)} · PM: ${escapeHtml(project.pmLead)}</p>` : ''}
+          <div class="badges">
+            <span class="badge ${project.visibility === 'public' ? 'public' : 'internal'}">${project.visibility === 'public' ? 'PUBLIC' : 'INTERNAL'}</span>
+            ${project.externalRoadmap ? '<span class="badge ext-roadmap">📋 EXT ROADMAP</span>' : ''}
+          </div>
+          <p class="project-summary">${escapeHtml(project.summary)}</p>
+          <div class="section-grid">
+            <div class="info-section impacts">
+              <h3>📈 Customer Impacts</h3>
+              ${renderList(project.impacts, 'No impacts reported yet.')}
+            </div>
+            <div class="info-section value-delivered">
+              <h3>🚀 Value Delivered</h3>
+              ${renderList(project.valueDelivered, 'No value delivered yet.')}
+            </div>
+            <div class="info-section risks">
+              <h3>⚠️ Blockers & Risks</h3>
+              ${renderList(project.risks, 'No blockers or risks.')}
+            </div>
+            <div class="info-section help">
+              <h3>🙋 Help Needed</h3>
+              ${renderList(project.helpNeeded, 'No help needed right now.')}
+            </div>
+          </div>
+          <p class="updated-at">Last updated: ${escapeHtml(project.updatedAt)} · Updates: ${escapeHtml(project.updateFrequency || 'N/A')}</p>
+        </article>
+      `;
+    }
+
+    function getFilteredProjects() {
+      const statusFilter = document.getElementById('filter-status').value;
+      const visFilter = document.getElementById('filter-visibility').value;
+      const extOnly = document.getElementById('filter-ext-roadmap').checked;
+      const sortBy = document.getElementById('sort-by').value;
+
+      let projects = allProjects.slice();
+
+      if (statusFilter !== 'all') {
+        projects = projects.filter(p => (p.status || 'on-track') === statusFilter);
+      }
+      if (visFilter !== 'all') {
+        projects = projects.filter(p => (p.visibility || 'internal') === visFilter);
+      }
+      if (extOnly) {
+        projects = projects.filter(p => p.externalRoadmap);
+      }
+
+      if (sortBy === 'priority') {
+        projects.sort((a, b) => a.priority - b.priority);
+      } else if (sortBy === 'updated') {
+        projects.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+      }
+
+      return projects;
+    }
+
+    function renderSummary() {
+      const total = allProjects.length;
+      const onTrack = allProjects.filter(p => (p.status || 'on-track') === 'on-track').length;
+      const atRisk = allProjects.filter(p => p.status === 'at-risk').length;
+      const needsAttention = allProjects.filter(p => p.status === 'needs-attention').length;
+      const staleCount = allProjects.filter(isStale).length;
+      const helpCount = allProjects.filter(p => p.helpNeeded && p.helpNeeded.length > 0).length;
+
+      const el = document.getElementById('summary');
+      el.style.display = 'flex';
+      el.innerHTML = `
+        <div class="stat-box"><span class="stat-value">${total}</span><span class="stat-label">Total</span></div>
+        <div class="stat-box"><span class="stat-value">${onTrack}</span><span class="stat-label">On Track</span></div>
+        <div class="stat-box"><span class="stat-value">${atRisk}</span><span class="stat-label">At Risk</span></div>
+        <div class="stat-box"><span class="stat-value">${needsAttention}</span><span class="stat-label">Needs Attention</span></div>
+        <div class="stat-box"><span class="stat-value">${staleCount}</span><span class="stat-label">Stale</span></div>
+        <div class="stat-box"><span class="stat-value">${helpCount}</span><span class="stat-label">Help Needed</span></div>
+      `;
+    }
+
+    function renderRoadmap(projects) {
+      const milestones = [];
+      projects.forEach(p => {
+        if (p.milestones && Array.isArray(p.milestones)) {
+          p.milestones.forEach(m => {
+            milestones.push({
+              date: m.date || '',
+              name: m.name || m.title || '',
+              status: (m.status || 'planned').toLowerCase(),
+              project: p.name
+            });
+          });
+        }
+      });
+
+      const container = document.getElementById('roadmap');
+      const items = document.getElementById('roadmap-items');
+
+      if (milestones.length === 0) {
+        container.style.display = 'none';
+        return;
+      }
+
+      milestones.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+      container.style.display = 'block';
+      items.innerHTML = milestones.map(m => {
+        const dotClass = ['completed', 'in-progress', 'upcoming', 'planned', 'at-risk'].includes(m.status) ? m.status : 'planned';
+        return `
+          <div class="roadmap-item">
+            <span class="roadmap-date">${escapeHtml(m.date)}</span>
+            <span class="roadmap-dot ${dotClass}"></span>
+            <span class="roadmap-label">${escapeHtml(m.name)} <span class="roadmap-project">— ${escapeHtml(m.project)}</span></span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderDashboard() {
+      const projects = getFilteredProjects();
+      const dashboard = document.getElementById('dashboard');
+      dashboard.innerHTML = projects.map(renderProject).join('');
+      renderRoadmap(projects);
+    }
+
+    async function loadDashboard() {
+      const loading = document.getElementById('loading');
+      const error = document.getElementById('error');
+
+      try {
+        const response = await fetch('data/projects.json');
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+
+        allProjects = data.projects;
+        loading.style.display = 'none';
+        renderSummary();
+        renderDashboard();
+      } catch (e) {
+        loading.style.display = 'none';
+        error.style.display = 'block';
+        console.error('Failed to load projects:', e);
+      }
+    }
+
+    document.getElementById('filter-status').addEventListener('change', renderDashboard);
+    document.getElementById('filter-visibility').addEventListener('change', renderDashboard);
+    document.getElementById('filter-ext-roadmap').addEventListener('change', renderDashboard);
+    document.getElementById('sort-by').addEventListener('change', renderDashboard);
+
+    loadDashboard();
+  </script>
+
+</body>
+</html>

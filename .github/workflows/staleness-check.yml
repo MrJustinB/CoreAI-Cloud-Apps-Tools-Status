@@ -1,0 +1,79 @@
+name: Staleness Check
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+jobs:
+  check-staleness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for stale projects and open issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const data = JSON.parse(fs.readFileSync('reporting/data/projects.json', 'utf8'));
+            const now = new Date();
+
+            const frequencyDays = {
+              weekly: 7,
+              biweekly: 14,
+              monthly: 30
+            };
+
+            for (const project of data.projects) {
+              const updatedAt = new Date(project.updatedAt);
+              const maxDays = frequencyDays[project.updateFrequency] || 30;
+              const daysSinceUpdate = Math.floor((now - updatedAt) / (1000 * 60 * 60 * 24));
+
+              if (daysSinceUpdate > maxDays) {
+                const daysOverdue = daysSinceUpdate - maxDays;
+                const title = `⏰ Stale project: ${project.name}`;
+
+                // Check for existing open issue with same title
+                const { data: existingIssues } = await github.rest.issues.listForRepo({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  state: 'open',
+                  labels: 'stale-project'
+                });
+
+                const duplicate = existingIssues.find(issue => issue.title === title);
+                if (duplicate) {
+                  console.log(`Issue already exists for "${project.name}", skipping.`);
+                  continue;
+                }
+
+                const body = [
+                  `## ⏰ Stale Project Alert`,
+                  ``,
+                  `**Project:** ${project.name}`,
+                  `**Last Updated:** ${project.updatedAt}`,
+                  `**Update Frequency:** ${project.updateFrequency}`,
+                  `**Days Since Update:** ${daysSinceUpdate}`,
+                  `**Days Overdue:** ${daysOverdue}`,
+                  ``,
+                  `### Leads`,
+                  `- **Eng Lead:** ${project.engLead}`,
+                  `- **PM Lead:** ${project.pmLead}`,
+                  ``,
+                  `Please update the project status in \`reporting/data/projects.json\`.`
+                ].join('\n');
+
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: title,
+                  body: body,
+                  labels: ['stale-project']
+                });
+
+                console.log(`Created stale issue for "${project.name}"`);
+              } else {
+                console.log(`"${project.name}" is up to date (${daysSinceUpdate}/${maxDays} days).`);
+              }
+            }

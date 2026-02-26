@@ -1,0 +1,88 @@
+name: Notify Project Data Update
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'reporting/data/projects.json'
+
+env:
+  DASHBOARD_URL: https://azure.github.io/azure-sdk-status/reporting/
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate summary and notify
+        uses: actions/github-script@v7
+        env:
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        with:
+          script: |
+            const fs = require('fs');
+
+            // Read and parse projects.json
+            const raw = fs.readFileSync('reporting/data/projects.json', 'utf8');
+            const projects = JSON.parse(raw);
+
+            // Generate summary
+            const total = projects.length;
+            const now = new Date();
+            const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+            const recentlyUpdated = projects.filter(p => {
+              const updated = new Date(p.lastUpdated || p.last_updated || '');
+              return updated >= thirtyDaysAgo;
+            }).length;
+            const atRisk = projects.filter(p => {
+              const status = (p.status || '').toLowerCase();
+              return status === 'at-risk' || status === 'needs-attention' || status === 'at risk' || status === 'needs attention';
+            }).length;
+
+            let summary = `**${total}** total projects`;
+            summary += ` · **${recentlyUpdated}** updated in the last 30 days`;
+            if (atRisk > 0) {
+              summary += ` · ⚠️ **${atRisk}** at-risk or needs-attention`;
+            }
+
+            const dashboardUrl = process.env.DASHBOARD_URL;
+
+            // Teams notification
+            const teamsWebhookUrl = process.env.TEAMS_WEBHOOK_URL;
+            if (teamsWebhookUrl) {
+              const card = {
+                type: "message",
+                attachments: [{
+                  contentType: "application/vnd.microsoft.card.adaptive",
+                  content: {
+                    type: "AdaptiveCard",
+                    version: "1.2",
+                    body: [
+                      { type: "TextBlock", text: "📊 Project Status Updated", weight: "Bolder", size: "Medium" },
+                      { type: "TextBlock", text: summary, wrap: true },
+                      { type: "TextBlock", text: `[View Dashboard](${dashboardUrl})`, wrap: true }
+                    ]
+                  }
+                }]
+              };
+
+              const response = await fetch(teamsWebhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(card)
+              });
+
+              if (!response.ok) {
+                core.warning(`Teams webhook returned ${response.status}: ${await response.text()}`);
+              } else {
+                core.info('Teams notification sent successfully');
+              }
+            } else {
+              core.info('No notification channels configured — set TEAMS_WEBHOOK_URL secret to enable Teams notifications');
+            }
+
+            // Email placeholder (future)
+            // To enable email notifications, add an EMAIL_RECIPIENTS secret and
+            // implement sending logic here.
