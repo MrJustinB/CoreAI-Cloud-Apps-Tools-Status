@@ -91,50 +91,6 @@
       "latestComment": null
     },
     {
-      "id": "python-sdk-async-overhaul",
-      "name": "Python SDK Async Overhaul",
-      "team": "Python",
-      "engLead": "TBD",
-      "pmLead": "TBD",
-      "prioritySetBy": "Justin Bettencourt",
-      "visibility": "public",
-      "externalRoadmap": false,
-      "updateFrequency": "monthly",
-      "priority": 4,
-      "status": "needs-attention",
-      "updatedAt": "2026-02-27",
-      "summary": "Modernizing the Python SDK async patterns to align with current Python best practices.",
-      "valueDelivered": [
-        "New async API surface released in preview for 3 partner teams"
-      ],
-      "impacts": [
-        "Customer satisfaction scores improved in early preview feedback"
-      ],
-      "risks": [
-        "Breaking changes require careful migration guidance for existing customers"
-      ],
-      "helpNeeded": [
-        "Need PM support for customer migration communication plan"
-      ],
-      "milestones": [
-        {
-          "name": "Migration guide published",
-          "date": "2026-03-30",
-          "status": "upcoming"
-        },
-        {
-          "name": "GA release",
-          "date": "2026-06-01",
-          "status": "planned"
-        }
-      ],
-      "screenshots": [],
-      "issueNumber": 4,
-      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/4",
-      "commentCount": 0,
-      "latestComment": null
-    },
-    {
       "id": "autorest-deprecation",
       "name": "AutoRest Deprecation",
       "team": "Azure SDK Tools",
