@@ -61,7 +61,7 @@ jobs:
                   `- **Eng Lead:** ${project.engLead}`,
                   `- **PM Lead:** ${project.pmLead}`,
                   ``,
-                  `Please update the project status in \`reporting/data/projects.json\`.`
+                  `Please update the project status by editing [Issue #${project.issueNumber}](${project.issueUrl}).`
                 ].join('\n');
 
                 await github.rest.issues.create({

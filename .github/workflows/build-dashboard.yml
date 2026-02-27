@@ -3,6 +3,8 @@ name: Build Dashboard Data
 on:
   issues:
     types: [opened, edited, closed, reopened, labeled, unlabeled]
+  issue_comment:
+    types: [created, edited, deleted]
   workflow_dispatch:
 
 jobs:
@@ -10,8 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     if: >
       github.event_name == 'workflow_dispatch' ||
-      contains(github.event.issue.labels.*.name, 'project-status') ||
-      contains(github.event.issue.labels.*.name, 'priority-order')
+      (github.event_name == 'issues' && (
+        contains(github.event.issue.labels.*.name, 'project-status') ||
+        contains(github.event.issue.labels.*.name, 'priority-order')
+      )) ||
+      (github.event_name == 'issue_comment' && (
+        contains(github.event.issue.labels.*.name, 'project-status') ||
+        contains(github.event.issue.labels.*.name, 'priority-order')
+      ))
     permissions:
       contents: write
       issues: read
@@ -46,11 +54,29 @@ jobs:
             let priorityOrder = [];
             if (priorityIssues.data.length > 0) {
               const prioBody = priorityIssues.data[0].body || '';
-              const prioSection = prioBody.split('### Priority Order')[1] || prioBody;
+              // Try to find ### Priority Order section first
+              const prioSection = prioBody.includes('### Priority Order')
+                ? prioBody.split('### Priority Order')[1]
+                : prioBody;
               priorityOrder = prioSection
                 .split('\n')
-                .map(l => l.replace(/^\d+\.\s*/, '').trim())
-                .filter(l => l.length > 0 && !l.startsWith('<!--'));
+                .map(l => l.trim())
+                .filter(l => l.length > 0 && !l.startsWith('<!--') && !l.startsWith('|--'))
+                .map(l => {
+                  // Handle table rows: | # | Project Name | ... |
+                  if (l.startsWith('|') && l.includes('|')) {
+                    const cells = l.split('|').map(c => c.trim()).filter(c => c.length > 0);
+                    // Skip header row (contains "Project" or "#")
+                    if (cells[0] === '#' || cells[1] === 'Project') return null;
+                    // Skip separator rows (|---|---|)
+                    if (cells.every(c => /^-+$/.test(c))) return null;
+                    // Return the project name (2nd column)
+                    return cells.length >= 2 ? cells[1] : null;
+                  }
+                  // Handle numbered list: 1. Project Name
+                  return l.replace(/^\d+\.\s*/, '').trim();
+                })
+                .filter(l => l && l.length > 0 && l !== 'Current priority order for all tracked projects (highest priority first):');
             }
 
             // Helper: parse a section from issue body

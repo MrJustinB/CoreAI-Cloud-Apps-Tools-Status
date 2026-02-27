@@ -26,17 +26,17 @@ jobs:
 
             // Read and parse projects.json
             const raw = fs.readFileSync('reporting/data/projects.json', 'utf8');
-            const projects = JSON.parse(raw);
+            const data = JSON.parse(raw);
 
             // Generate summary
-            const total = projects.length;
+            const total = data.projects.length;
             const now = new Date();
             const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-            const recentlyUpdated = projects.filter(p => {
-              const updated = new Date(p.lastUpdated || p.last_updated || '');
+            const recentlyUpdated = data.projects.filter(p => {
+              const updated = new Date(p.updatedAt || '');
               return updated >= thirtyDaysAgo;
             }).length;
-            const atRisk = projects.filter(p => {
+            const atRisk = data.projects.filter(p => {
               const status = (p.status || '').toLowerCase();
               return status === 'at-risk' || status === 'needs-attention' || status === 'at risk' || status === 'needs attention';
             }).length;

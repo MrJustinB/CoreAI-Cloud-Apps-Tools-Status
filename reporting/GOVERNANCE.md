@@ -7,22 +7,22 @@ This document codifies the operating model for the Azure SDK Project Status Dash
 ## Update Frequency
 
 - The default cadence for all projects is **monthly**.
-- Individual projects may override this via the `updateFrequency` field in `projects.json`. Accepted values: `weekly`, `biweekly`, or `monthly`.
+- Individual projects may override this via the **Update Frequency** dropdown in their project issue. Accepted values: `weekly`, `biweekly`, or `monthly`.
 - Fast-moving projects (e.g., Azure MCP) may use a **biweekly** cadence when the pace of change warrants it.
 
 ## Priority Governance
 
 - **Justin Bettencourt** sets the holistic priority ranking across all projects.
 - Priority is informed by input from LT: **Peter, Mayuri, Lori, and Samer**.
-- Each project's priority is recorded in the `prioritySetBy` field in `projects.json`.
+- Each project's priority is determined by the pinned priority order issue.
 - Priority reflects **strategic importance to the org**, not just urgency or recency.
 - Priority is managed via a pinned "🏆 Project Priority Order" issue. Justin edits this issue to reorder projects. The list is a simple numbered ranking — line 1 is the highest priority.
 
 ## Ownership
 
-- Every project **must** have a named **Eng Lead** (`engLead`) and **PM Lead** (`pmLead`).
+- Every project **must** have a named **Eng Lead** and **PM Lead** in its issue form.
 - These individuals are accountable for keeping their project's entry accurate and up to date.
-- If a lead changes, the project entry must be updated **immediately** — stale ownership creates gaps in accountability.
+- If a lead changes, the project issue must be updated **immediately** — stale ownership creates gaps in accountability.
 
 ## How to Update Your Project
 
@@ -81,6 +81,6 @@ Leadership and team members can comment directly on any project issue. The dashb
 
 ## Tooling Decisions
 
-- **GitHub-native**: all data lives in this repo (JSON + HTML), updates via PRs or Issue forms, automation via GitHub Actions.
+- **GitHub-native**: all data lives in GitHub Issues, dashboard is auto-generated HTML, automation via GitHub Actions.
 - **Not using Loop** (feedback: leadership dislikes it) or SharePoint.
 - Email is used only for notifications, not as the primary format.
