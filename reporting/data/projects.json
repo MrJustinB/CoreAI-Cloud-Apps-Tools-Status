@@ -5,9 +5,9 @@
     {
       "id": "typespec-evolution",
       "name": "TypeSpec Evolution",
-      "team": "Azure SDK Tools",
-      "engLead": "Laurent Mazuel",
-      "pmLead": "TBD",
+      "team": "TypeSpec",
+      "engLead": "Laurent?",
+      "pmLead": "Lori",
       "prioritySetBy": "Justin Bettencourt",
       "visibility": "public",
       "externalRoadmap": true,
@@ -15,10 +15,9 @@
       "priority": 1,
       "status": "on-track",
       "updatedAt": "2026-02-27",
-      "summary": "Evolving TypeSpec to support broader API description scenarios across Azure services.",
+      "summary": "xxx.",
       "valueDelivered": [
-        "TypeSpec-to-OpenAPI v3.1 converter shipped to Azure Storage team",
-        "New onboarding guide reduced partner ramp-up by 75%"
+        "xxx"
       ],
       "impacts": [
         "Reduced API onboarding time from 4 weeks to 1 week for 12 partner teams",
