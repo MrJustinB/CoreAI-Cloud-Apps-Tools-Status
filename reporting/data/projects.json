@@ -49,48 +49,6 @@
       "latestComment": null
     },
     {
-      "id": "sdk-performance-improvements",
-      "name": "SDK Performance Improvements",
-      "team": ".NET / Java",
-      "engLead": "TBD",
-      "pmLead": "TBD",
-      "prioritySetBy": "Justin Bettencourt",
-      "visibility": "public",
-      "externalRoadmap": false,
-      "updateFrequency": "monthly",
-      "priority": 3,
-      "status": "on-track",
-      "updatedAt": "2026-02-27",
-      "summary": "Systematic performance improvements across .NET and Java SDKs for high-throughput scenarios.",
-      "valueDelivered": [
-        "New connection pooling shipped in .NET SDK — 2x throughput for Storage clients",
-        "Event Hubs Java SDK hot-path optimization released in v5.18"
-      ],
-      "impacts": [
-        "P95 latency reduced by 30% in Azure Storage .NET SDK",
-        "Java SDK memory allocation cut by 40% in Event Hubs hot path"
-      ],
-      "risks": [],
-      "helpNeeded": [],
-      "milestones": [
-        {
-          "name": "Connection pooling benchmarks",
-          "date": "2026-03-15",
-          "status": "upcoming"
-        },
-        {
-          "name": "v5.19 Java SDK release",
-          "date": "2026-04-01",
-          "status": "planned"
-        }
-      ],
-      "screenshots": [],
-      "issueNumber": 3,
-      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/3",
-      "commentCount": 0,
-      "latestComment": null
-    },
-    {
       "id": "autorest-deprecation",
       "name": "AutoRest Deprecation",
       "team": "Azure SDK Tools",
