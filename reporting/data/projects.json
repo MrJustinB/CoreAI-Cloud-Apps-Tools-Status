@@ -331,52 +331,6 @@
       "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/2",
       "commentCount": 0,
       "latestComment": null
-    },
-    {
-      "id": "typespec-evolution",
-      "name": "TypeSpec Evolution",
-      "team": "Azure SDK Tools",
-      "engLead": "Laurent Mazuel",
-      "pmLead": "TBD",
-      "prioritySetBy": "Justin Bettencourt",
-      "visibility": "public",
-      "externalRoadmap": true,
-      "updateFrequency": "monthly",
-      "priority": 999,
-      "status": "on-track",
-      "updatedAt": "2026-02-27",
-      "summary": "Evolving TypeSpec to support broader API description scenarios across Azure services.",
-      "valueDelivered": [
-        "TypeSpec-to-OpenAPI v3.1 converter shipped to Azure Storage team",
-        "New onboarding guide reduced partner ramp-up by 75%"
-      ],
-      "impacts": [
-        "Reduced API onboarding time from 4 weeks to 1 week for 12 partner teams",
-        "3 new Azure services adopted TypeSpec this quarter"
-      ],
-      "risks": [
-        "Dependency on partner team bandwidth for migration — need executive alignment"
-      ],
-      "helpNeeded": [
-        "Executive support to prioritize partner team migration timelines"
-      ],
-      "milestones": [
-        {
-          "name": "OpenAPI v3.1 converter GA",
-          "date": "2026-04-15",
-          "status": "in-progress"
-        },
-        {
-          "name": "Full data-plane migration",
-          "date": "2026-07-01",
-          "status": "planned"
-        }
-      ],
-      "screenshots": [],
-      "issueNumber": 1,
-      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/1",
-      "commentCount": 0,
-      "latestComment": null
     }
   ]
 }
