@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    concurrency:
+      group: build-dashboard
+      cancel-in-progress: true
     if: >
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'issues' && (
@@ -247,5 +250,6 @@ jobs:
             echo "No changes to projects.json"
           else
             git commit -m "Auto-update projects.json from GitHub Issues"
+            git pull --rebase origin main
             git push
           fi
