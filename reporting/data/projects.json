@@ -152,7 +152,7 @@
       "name": "APIView Copilot",
       "team": "Azure SDK Tools",
       "engLead": "Travis",
-      "pmLead": "Justin / Ronnie",
+      "pmLead": "Justin",
       "prioritySetBy": "Justin Bettencourt",
       "visibility": "internal",
       "externalRoadmap": false,
