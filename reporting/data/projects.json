@@ -3,52 +3,6 @@
   "generatedFrom": "github-issues",
   "projects": [
     {
-      "id": "azure-sdk-ai-agent-integration",
-      "name": "Azure SDK AI Agent Integration",
-      "team": "Cross-Language",
-      "engLead": "TBD",
-      "pmLead": "Ronnie Geraghty",
-      "prioritySetBy": "Justin Bettencourt",
-      "visibility": "public",
-      "externalRoadmap": true,
-      "updateFrequency": "monthly",
-      "priority": 2,
-      "status": "at-risk",
-      "updatedAt": "2026-02-27",
-      "summary": "Adding first-class AI agent support to Azure SDK across all languages.",
-      "valueDelivered": [
-        "Agent framework preview SDK released for Python and .NET",
-        "Streaming response support shipped in JavaScript SDK"
-      ],
-      "impacts": [
-        "Early preview adopted by 5 internal teams building copilot experiences"
-      ],
-      "risks": [
-        "Python and .NET implementations diverging — need architectural alignment",
-        "Blocked on OpenAI API stabilization for streaming interfaces"
-      ],
-      "helpNeeded": [
-        "Cross-org alignment meeting with Azure AI team on shared interfaces"
-      ],
-      "milestones": [
-        {
-          "name": "Python/NET alignment",
-          "date": "2026-03-30",
-          "status": "at-risk"
-        },
-        {
-          "name": "Public preview",
-          "date": "2026-05-15",
-          "status": "planned"
-        }
-      ],
-      "screenshots": [],
-      "issueNumber": 2,
-      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/2",
-      "commentCount": 0,
-      "latestComment": null
-    },
-    {
       "id": "autorest-deprecation",
       "name": "AutoRest Deprecation",
       "team": "Azure SDK Tools",
