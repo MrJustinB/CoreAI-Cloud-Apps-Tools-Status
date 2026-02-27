@@ -1,178 +1,139 @@
 {
-  "lastUpdated": "2026-02-26",
+  "lastUpdated": "2026-02-27",
+  "generatedFrom": "github-issues",
   "projects": [
     {
-      "id": "typespec-evolution",
-      "name": "TypeSpec Evolution",
-      "team": "Azure SDK Tools",
-      "engLead": "Laurent Mazuel",
+      "id": "engineering-system-engsys",
+      "name": "Engineering System (EngSys)",
+      "team": "EngSys",
+      "engLead": "Scott K",
       "pmLead": "TBD",
       "prioritySetBy": "Justin Bettencourt",
-      "visibility": "public",
-      "externalRoadmap": true,
-      "updateFrequency": "monthly",
-      "priority": 1,
-      "status": "on-track",
-      "updatedAt": "2026-02-20",
-      "summary": "Evolving TypeSpec to support broader API description scenarios across Azure services.",
-      "impacts": [
-        "Reduced API onboarding time from 4 weeks to 1 week for 12 partner teams",
-        "3 new Azure services adopted TypeSpec this quarter"
-      ],
-      "risks": [
-        "Dependency on partner team bandwidth for migration — need executive alignment"
-      ],
-      "valueDelivered": [
-        "TypeSpec-to-OpenAPI v3.1 converter shipped to Azure Storage team",
-        "New onboarding guide reduced partner ramp-up by 75%"
-      ],
-      "helpNeeded": [
-        "Executive support to prioritize partner team migration timelines"
-      ],
-      "milestones": [
-        { "name": "OpenAPI v3.1 converter GA", "date": "2026-04-15", "status": "in-progress" },
-        { "name": "Full data-plane migration", "date": "2026-07-01", "status": "planned" }
-      ]
-    },
-    {
-      "id": "ai-sdk-agent",
-      "name": "Azure SDK AI Agent Integration",
-      "team": "Cross-Language",
-      "engLead": "TBD",
-      "pmLead": "Ronnie Geraghty",
-      "prioritySetBy": "Justin Bettencourt",
-      "visibility": "public",
-      "externalRoadmap": true,
-      "updateFrequency": "monthly",
-      "priority": 2,
-      "status": "at-risk",
-      "updatedAt": "2026-02-18",
-      "summary": "Adding first-class AI agent support to Azure SDK across all languages.",
-      "impacts": [
-        "Early preview adopted by 5 internal teams building copilot experiences"
-      ],
-      "risks": [
-        "Python and .NET implementations diverging — need architectural alignment",
-        "Blocked on OpenAI API stabilization for streaming interfaces"
-      ],
-      "valueDelivered": [
-        "Agent framework preview SDK released for Python and .NET",
-        "Streaming response support shipped in JavaScript SDK"
-      ],
-      "helpNeeded": [
-        "Cross-org alignment meeting with Azure AI team on shared interfaces"
-      ],
-      "milestones": [
-        { "name": "Python/NET alignment", "date": "2026-03-30", "status": "at-risk" },
-        { "name": "Public preview", "date": "2026-05-15", "status": "planned" }
-      ]
-    },
-    {
-      "id": "sdk-perf-improvements",
-      "name": "SDK Performance Improvements",
-      "team": ".NET / Java",
-      "engLead": "TBD",
-      "pmLead": "TBD",
-      "prioritySetBy": "Justin Bettencourt",
-      "visibility": "public",
+      "visibility": "internal",
       "externalRoadmap": false,
       "updateFrequency": "monthly",
-      "priority": 3,
+      "priority": 999,
       "status": "on-track",
-      "updatedAt": "2026-02-22",
-      "summary": "Systematic performance improvements across .NET and Java SDKs for high-throughput scenarios.",
-      "impacts": [
-        "P95 latency reduced by 30% in Azure Storage .NET SDK",
-        "Java SDK memory allocation cut by 40% in Event Hubs hot path"
-      ],
-      "risks": [],
-      "valueDelivered": [
-        "New connection pooling shipped in .NET SDK — 2x throughput for Storage clients",
-        "Event Hubs Java SDK hot-path optimization released in v5.18"
-      ],
-      "helpNeeded": [],
-      "milestones": [
-        { "name": "Connection pooling benchmarks", "date": "2026-03-15", "status": "upcoming" },
-        { "name": "v5.19 Java SDK release", "date": "2026-04-01", "status": "planned" }
-      ]
-    },
-    {
-      "id": "python-async-overhaul",
-      "name": "Python SDK Async Overhaul",
-      "team": "Python",
-      "engLead": "TBD",
-      "pmLead": "TBD",
-      "prioritySetBy": "Justin Bettencourt",
-      "visibility": "public",
-      "externalRoadmap": false,
-      "updateFrequency": "monthly",
-      "priority": 4,
-      "status": "needs-attention",
-      "updatedAt": "2026-02-15",
-      "summary": "Modernizing the Python SDK async patterns to align with current Python best practices.",
-      "impacts": [
-        "Customer satisfaction scores improved in early preview feedback"
-      ],
-      "risks": [
-        "Breaking changes require careful migration guidance for existing customers"
-      ],
-      "valueDelivered": [
-        "New async API surface released in preview for 3 partner teams"
-      ],
-      "helpNeeded": [
-        "Need PM support for customer migration communication plan"
-      ],
-      "milestones": [
-        { "name": "Migration guide published", "date": "2026-03-30", "status": "upcoming" },
-        { "name": "GA release", "date": "2026-06-01", "status": "planned" }
-      ]
-    },
-    {
-      "id": "autorest-deprecation",
-      "name": "AutoRest Deprecation",
-      "team": "Azure SDK Tools",
-      "engLead": "Laurent Mazuel",
-      "pmLead": "TBD",
-      "prioritySetBy": "Justin Bettencourt",
-      "visibility": "public",
-      "externalRoadmap": true,
-      "updateFrequency": "monthly",
-      "priority": 5,
-      "status": "on-track",
-      "updatedAt": "2026-02-26",
-      "summary": "Gradual deprecation of AutoRest as services migrate to TypeSpec. Long-tail effort with external customer impact.",
-      "impacts": [
-        "Pinned deprecation issue in AutoRest repo received first external customer inquiry"
-      ],
-      "risks": [
-        "Long-tail — deprecation won't complete when conversions finish"
-      ],
+      "updatedAt": "2026-02-27",
+      "summary": "Cross-cutting engineering system supporting all Azure SDK teams. Quarterly visibility requested by multiple stakeholders.",
       "valueDelivered": [],
-      "helpNeeded": [],
-      "milestones": [
-        { "name": "Deprecation notice published", "date": "2026-02-25", "status": "completed" },
-        { "name": "First services fully migrated off", "date": "2026-06-01", "status": "planned" }
-      ]
-    },
-    {
-      "id": "azure-mcp",
-      "name": "Azure MCP",
-      "team": "Cross-Team",
-      "engLead": "Josh",
-      "pmLead": "TBD",
-      "prioritySetBy": "Justin Bettencourt",
-      "visibility": "public",
-      "externalRoadmap": true,
-      "updateFrequency": "biweekly",
-      "priority": 6,
-      "status": "on-track",
-      "updatedAt": "2026-02-26",
-      "summary": "Azure MCP server providing AI agent tooling for Azure services. Fast-moving project with multiple releases per week.",
       "impacts": [],
       "risks": [],
-      "valueDelivered": [],
       "helpNeeded": [],
-      "milestones": []
+      "milestones": [],
+      "screenshots": [],
+      "issueNumber": 12,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/12",
+      "commentCount": 0,
+      "latestComment": null
+    },
+    {
+      "id": "java-vnext-unbranded-core",
+      "name": "Java vNext (Unbranded Core)",
+      "team": "Java",
+      "engLead": "Jonathan Jones",
+      "pmLead": "Sandeep",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": false,
+      "updateFrequency": "monthly",
+      "priority": 999,
+      "status": "on-track",
+      "updatedAt": "2026-02-27",
+      "summary": "Moving unbranded core to GA and migrating Azure libraries on top. Removes problematic sync stack. Storage data plane is first target.",
+      "valueDelivered": [],
+      "impacts": [],
+      "risks": [
+        "Push-pull tension — Jonathan wants broad adoption but needs to sequence carefully"
+      ],
+      "helpNeeded": [],
+      "milestones": [
+        {
+          "name": "Storage data plane on unbranded core",
+          "date": "2026-06-01",
+          "status": "planned"
+        }
+      ],
+      "screenshots": [],
+      "issueNumber": 11,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/11",
+      "commentCount": 0,
+      "latestComment": null
+    },
+    {
+      "id": "api-view-copilot",
+      "name": "API View Copilot",
+      "team": "Azure SDK Tools",
+      "engLead": "TBD",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "internal",
+      "externalRoadmap": false,
+      "updateFrequency": "monthly",
+      "priority": 999,
+      "status": "on-track",
+      "updatedAt": "2026-02-27",
+      "summary": "Copilot integration for API View tool, helping with API review and design feedback.",
+      "valueDelivered": [],
+      "impacts": [],
+      "risks": [],
+      "helpNeeded": [],
+      "milestones": [],
+      "screenshots": [],
+      "issueNumber": 10,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/10",
+      "commentCount": 0,
+      "latestComment": null
+    },
+    {
+      "id": "azure-sdk-tools-agent",
+      "name": "Azure SDK Tools Agent",
+      "team": "Azure SDK Tools",
+      "engLead": "TBD",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "internal",
+      "externalRoadmap": false,
+      "updateFrequency": "monthly",
+      "priority": 999,
+      "status": "on-track",
+      "updatedAt": "2026-02-27",
+      "summary": "Internal chatbot/agent for Azure SDK team workflows and automation.",
+      "valueDelivered": [],
+      "impacts": [],
+      "risks": [],
+      "helpNeeded": [],
+      "milestones": [],
+      "screenshots": [],
+      "issueNumber": 9,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/9",
+      "commentCount": 0,
+      "latestComment": null
+    },
+    {
+      "id": "github-copilot-for-azure",
+      "name": "GitHub Copilot for Azure",
+      "team": "Kay's Team",
+      "engLead": "Kay",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "monthly",
+      "priority": 999,
+      "status": "on-track",
+      "updatedAt": "2026-02-27",
+      "summary": "VS Code extension and CLI plugin for Azure-focused Copilot experiences. Source in ADO.",
+      "valueDelivered": [],
+      "impacts": [],
+      "risks": [],
+      "helpNeeded": [],
+      "milestones": [],
+      "screenshots": [],
+      "issueNumber": 8,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/8",
+      "commentCount": 0,
+      "latestComment": null
     },
     {
       "id": "azure-sdk-skills",
@@ -184,119 +145,263 @@
       "visibility": "public",
       "externalRoadmap": true,
       "updateFrequency": "monthly",
-      "priority": 7,
+      "priority": 999,
       "status": "on-track",
-      "updatedAt": "2026-02-26",
+      "updatedAt": "2026-02-27",
       "summary": "Copilot skills for Azure SDK, published to public skills repo and packaged as CLI plugin. Integrated with Azure MCP.",
+      "valueDelivered": [],
       "impacts": [],
       "risks": [],
-      "valueDelivered": [],
       "helpNeeded": [],
-      "milestones": []
+      "milestones": [],
+      "screenshots": [],
+      "issueNumber": 7,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/7",
+      "commentCount": 0,
+      "latestComment": null
     },
     {
-      "id": "gh-copilot-azure",
-      "name": "GitHub Copilot for Azure",
-      "team": "Kay's Team",
-      "engLead": "Kay",
+      "id": "azure-mcp",
+      "name": "Azure MCP",
+      "team": "Cross-Team",
+      "engLead": "Josh",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "biweekly",
+      "priority": 999,
+      "status": "on-track",
+      "updatedAt": "2026-02-27",
+      "summary": "Azure MCP server providing AI agent tooling for Azure services. Fast-moving project with multiple releases per week.",
+      "valueDelivered": [],
+      "impacts": [],
+      "risks": [],
+      "helpNeeded": [],
+      "milestones": [],
+      "screenshots": [],
+      "issueNumber": 6,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/6",
+      "commentCount": 0,
+      "latestComment": null
+    },
+    {
+      "id": "autorest-deprecation",
+      "name": "AutoRest Deprecation",
+      "team": "Azure SDK Tools",
+      "engLead": "Laurent Mazuel",
       "pmLead": "TBD",
       "prioritySetBy": "Justin Bettencourt",
       "visibility": "public",
       "externalRoadmap": true,
       "updateFrequency": "monthly",
-      "priority": 8,
+      "priority": 999,
       "status": "on-track",
-      "updatedAt": "2026-02-26",
-      "summary": "VS Code extension and CLI plugin for Azure-focused Copilot experiences. Source in ADO.",
-      "impacts": [],
-      "risks": [],
+      "updatedAt": "2026-02-27",
+      "summary": "Gradual deprecation of AutoRest as services migrate to TypeSpec. Long-tail effort with external customer impact.",
       "valueDelivered": [],
+      "impacts": [
+        "Pinned deprecation issue in AutoRest repo received first external customer inquiry"
+      ],
+      "risks": [
+        "Long-tail — deprecation won't complete when conversions finish"
+      ],
       "helpNeeded": [],
-      "milestones": []
+      "milestones": [
+        {
+          "name": "Deprecation notice published",
+          "date": "2026-02-25",
+          "status": "completed"
+        },
+        {
+          "name": "First services fully migrated off",
+          "date": "2026-06-01",
+          "status": "planned"
+        }
+      ],
+      "screenshots": [],
+      "issueNumber": 5,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/5",
+      "commentCount": 0,
+      "latestComment": null
     },
     {
-      "id": "sdk-tools-agent",
-      "name": "Azure SDK Tools Agent",
-      "team": "Azure SDK Tools",
+      "id": "python-sdk-async-overhaul",
+      "name": "Python SDK Async Overhaul",
+      "team": "Python",
       "engLead": "TBD",
       "pmLead": "TBD",
-      "prioritySetBy": "Justin Bettencourt",
-      "visibility": "internal",
-      "externalRoadmap": false,
-      "updateFrequency": "monthly",
-      "priority": 9,
-      "status": "on-track",
-      "updatedAt": "2026-02-26",
-      "summary": "Internal chatbot/agent for Azure SDK team workflows and automation.",
-      "impacts": [],
-      "risks": [],
-      "valueDelivered": [],
-      "helpNeeded": [],
-      "milestones": []
-    },
-    {
-      "id": "apiview-copilot",
-      "name": "API View Copilot",
-      "team": "Azure SDK Tools",
-      "engLead": "TBD",
-      "pmLead": "TBD",
-      "prioritySetBy": "Justin Bettencourt",
-      "visibility": "internal",
-      "externalRoadmap": false,
-      "updateFrequency": "monthly",
-      "priority": 10,
-      "status": "on-track",
-      "updatedAt": "2026-02-26",
-      "summary": "Copilot integration for API View tool, helping with API review and design feedback.",
-      "impacts": [],
-      "risks": [],
-      "valueDelivered": [],
-      "helpNeeded": [],
-      "milestones": []
-    },
-    {
-      "id": "java-vnext",
-      "name": "Java vNext (Unbranded Core)",
-      "team": "Java",
-      "engLead": "Jonathan Jones",
-      "pmLead": "Sandeep",
       "prioritySetBy": "Justin Bettencourt",
       "visibility": "public",
       "externalRoadmap": false,
       "updateFrequency": "monthly",
-      "priority": 11,
-      "status": "on-track",
-      "updatedAt": "2026-02-26",
-      "summary": "Moving unbranded core to GA and migrating Azure libraries on top. Removes problematic sync stack. Storage data plane is first target.",
-      "impacts": [],
-      "risks": [
-        "Push-pull tension — Jonathan wants broad adoption but needs to sequence carefully"
+      "priority": 999,
+      "status": "needs-attention",
+      "updatedAt": "2026-02-27",
+      "summary": "Modernizing the Python SDK async patterns to align with current Python best practices.",
+      "valueDelivered": [
+        "New async API surface released in preview for 3 partner teams"
       ],
-      "valueDelivered": [],
-      "helpNeeded": [],
+      "impacts": [
+        "Customer satisfaction scores improved in early preview feedback"
+      ],
+      "risks": [
+        "Breaking changes require careful migration guidance for existing customers"
+      ],
+      "helpNeeded": [
+        "Need PM support for customer migration communication plan"
+      ],
       "milestones": [
-        { "name": "Storage data plane on unbranded core", "date": "2026-06-01", "status": "planned" }
-      ]
+        {
+          "name": "Migration guide published",
+          "date": "2026-03-30",
+          "status": "upcoming"
+        },
+        {
+          "name": "GA release",
+          "date": "2026-06-01",
+          "status": "planned"
+        }
+      ],
+      "screenshots": [],
+      "issueNumber": 4,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/4",
+      "commentCount": 0,
+      "latestComment": null
     },
     {
-      "id": "engsys",
-      "name": "Engineering System (EngSys)",
-      "team": "EngSys",
-      "engLead": "Scott K",
+      "id": "sdk-performance-improvements",
+      "name": "SDK Performance Improvements",
+      "team": ".NET / Java",
+      "engLead": "TBD",
       "pmLead": "TBD",
       "prioritySetBy": "Justin Bettencourt",
-      "visibility": "internal",
+      "visibility": "public",
       "externalRoadmap": false,
       "updateFrequency": "monthly",
-      "priority": 12,
+      "priority": 999,
       "status": "on-track",
-      "updatedAt": "2026-02-26",
-      "summary": "Cross-cutting engineering system supporting all Azure SDK teams. Quarterly visibility requested by multiple stakeholders.",
-      "impacts": [],
+      "updatedAt": "2026-02-27",
+      "summary": "Systematic performance improvements across .NET and Java SDKs for high-throughput scenarios.",
+      "valueDelivered": [
+        "New connection pooling shipped in .NET SDK — 2x throughput for Storage clients",
+        "Event Hubs Java SDK hot-path optimization released in v5.18"
+      ],
+      "impacts": [
+        "P95 latency reduced by 30% in Azure Storage .NET SDK",
+        "Java SDK memory allocation cut by 40% in Event Hubs hot path"
+      ],
       "risks": [],
-      "valueDelivered": [],
       "helpNeeded": [],
-      "milestones": []
+      "milestones": [
+        {
+          "name": "Connection pooling benchmarks",
+          "date": "2026-03-15",
+          "status": "upcoming"
+        },
+        {
+          "name": "v5.19 Java SDK release",
+          "date": "2026-04-01",
+          "status": "planned"
+        }
+      ],
+      "screenshots": [],
+      "issueNumber": 3,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/3",
+      "commentCount": 0,
+      "latestComment": null
+    },
+    {
+      "id": "azure-sdk-ai-agent-integration",
+      "name": "Azure SDK AI Agent Integration",
+      "team": "Cross-Language",
+      "engLead": "TBD",
+      "pmLead": "Ronnie Geraghty",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "monthly",
+      "priority": 999,
+      "status": "at-risk",
+      "updatedAt": "2026-02-27",
+      "summary": "Adding first-class AI agent support to Azure SDK across all languages.",
+      "valueDelivered": [
+        "Agent framework preview SDK released for Python and .NET",
+        "Streaming response support shipped in JavaScript SDK"
+      ],
+      "impacts": [
+        "Early preview adopted by 5 internal teams building copilot experiences"
+      ],
+      "risks": [
+        "Python and .NET implementations diverging — need architectural alignment",
+        "Blocked on OpenAI API stabilization for streaming interfaces"
+      ],
+      "helpNeeded": [
+        "Cross-org alignment meeting with Azure AI team on shared interfaces"
+      ],
+      "milestones": [
+        {
+          "name": "Python/NET alignment",
+          "date": "2026-03-30",
+          "status": "at-risk"
+        },
+        {
+          "name": "Public preview",
+          "date": "2026-05-15",
+          "status": "planned"
+        }
+      ],
+      "screenshots": [],
+      "issueNumber": 2,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/2",
+      "commentCount": 0,
+      "latestComment": null
+    },
+    {
+      "id": "typespec-evolution",
+      "name": "TypeSpec Evolution",
+      "team": "Azure SDK Tools",
+      "engLead": "Laurent Mazuel",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "monthly",
+      "priority": 999,
+      "status": "on-track",
+      "updatedAt": "2026-02-27",
+      "summary": "Evolving TypeSpec to support broader API description scenarios across Azure services.",
+      "valueDelivered": [
+        "TypeSpec-to-OpenAPI v3.1 converter shipped to Azure Storage team",
+        "New onboarding guide reduced partner ramp-up by 75%"
+      ],
+      "impacts": [
+        "Reduced API onboarding time from 4 weeks to 1 week for 12 partner teams",
+        "3 new Azure services adopted TypeSpec this quarter"
+      ],
+      "risks": [
+        "Dependency on partner team bandwidth for migration — need executive alignment"
+      ],
+      "helpNeeded": [
+        "Executive support to prioritize partner team migration timelines"
+      ],
+      "milestones": [
+        {
+          "name": "OpenAPI v3.1 converter GA",
+          "date": "2026-04-15",
+          "status": "in-progress"
+        },
+        {
+          "name": "Full data-plane migration",
+          "date": "2026-07-01",
+          "status": "planned"
+        }
+      ],
+      "screenshots": [],
+      "issueNumber": 1,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/1",
+      "commentCount": 0,
+      "latestComment": null
     }
   ]
 }
