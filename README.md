@@ -17,16 +17,16 @@ Teams update a simple JSON file and leadership can view a prioritized dashboard 
 
 | Link | Purpose |
 |------|---------|
-| [📊 Dashboard](https://mrjustinb.github.io/CoreAI-Cloud-Apps-Tools-Status/reporting/) | View project status (GitHub Pages) |
-| [📝 Submit Update](../../issues/new?template=project-update.yml) | Update your project via form (no Git needed) |
-| [📋 Edit JSON](reporting/data/projects.json) | Edit project data directly |
+| [📊 Dashboard](https://mrjustinb.github.io/CoreAI-Cloud-Apps-Tools-Status/reporting/) | View project status |
+| [📝 Create Project](../../issues/new?template=project.yml) | Add a new project via form |
+| [📋 All Projects](../../issues?q=is%3Aissue+is%3Aopen+label%3Aproject-status) | View all project issues |
+| [🏆 Priority Order](../../issues?q=is%3Aissue+is%3Aopen+label%3Apriority-order) | Edit project priorities |
 | [📜 Governance](reporting/GOVERNANCE.md) | Operating model and policies |
-| [🔬 Agent Research](reporting/AGENT-RESEARCH.md) | Future: agent-assisted updates |
 
 ## How It Works
 
-1. **Project leads** update their project status monthly (or per their project's cadence)
-2. **GitHub Actions** validate data, detect stale projects, and send notifications
-3. **Leadership** views the dashboard — filterable by status, visibility, and roadmap applicability
-
-See [`reporting/README.md`](reporting/README.md) for full schema documentation and setup instructions.
+1. **Each project is a GitHub Issue** — created from a form template, no JSON editing
+2. **Project leads** update their issue monthly by editing the form fields
+3. **A GitHub Action** reads all project issues and generates the dashboard data
+4. **Leadership** views the dashboard and comments directly on project issues
+5. **Screenshots & attachments** are pasted directly into issues

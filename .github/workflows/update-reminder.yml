@@ -23,7 +23,7 @@ jobs:
 
             let projectList = '';
             for (const project of data.projects) {
-              projectList += `| ${project.name} | ${project.engLead} | ${project.pmLead} | ${project.status} |\n`;
+              projectList += `| ${project.name} | ${project.engLead} | ${project.pmLead} | ${project.status} | [Edit Issue](${project.issueUrl || '#'}) |\n`;
             }
 
             const body = [
@@ -33,14 +33,15 @@ jobs:
               ``,
               `### Projects`,
               ``,
-              `| Project | Eng Lead | PM Lead | Current Status |`,
-              `|---------|----------|---------|----------------|`,
+              `| Project | Eng Lead | PM Lead | Current Status | Update Link |`,
+              `|---------|----------|---------|----------------|-------------|`,
               projectList.trimEnd(),
               ``,
               `### How to Update`,
-              `1. Edit \`reporting/data/projects.json\` with your latest status`,
-              `2. Update the \`updatedAt\` field to today's date`,
-              `3. Open a PR using the **status-update** PR template`,
+              `1. Click the **Update Link** for your project above`,
+              `2. Click **Edit** on the issue body`,
+              `3. Update your status, value delivered, blockers, and milestones`,
+              `4. Save — the dashboard will update automatically`,
               ``,
               `Thank you for keeping our project tracking up to date! 🙏`
             ].join('\n');

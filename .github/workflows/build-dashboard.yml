@@ -1,0 +1,225 @@
+name: Build Dashboard Data
+
+on:
+  issues:
+    types: [opened, edited, closed, reopened, labeled, unlabeled]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.issue.labels.*.name, 'project-status') ||
+      contains(github.event.issue.labels.*.name, 'priority-order')
+    permissions:
+      contents: write
+      issues: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build projects.json from issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            // Fetch all open project-status issues
+            const projectIssues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'project-status',
+              state: 'open',
+              per_page: 100
+            });
+
+            // Fetch priority order issue
+            const priorityIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'priority-order',
+              state: 'open',
+              per_page: 1
+            });
+
+            // Parse priority order
+            let priorityOrder = [];
+            if (priorityIssues.data.length > 0) {
+              const prioBody = priorityIssues.data[0].body || '';
+              const prioSection = prioBody.split('### Priority Order')[1] || prioBody;
+              priorityOrder = prioSection
+                .split('\n')
+                .map(l => l.replace(/^\d+\.\s*/, '').trim())
+                .filter(l => l.length > 0 && !l.startsWith('<!--'));
+            }
+
+            // Helper: parse a section from issue body
+            function parseSection(body, heading) {
+              // Match ### heading or ### emoji heading
+              const patterns = [
+                new RegExp(`### ${heading}\\s*\\n([\\s\\S]*?)(?=\\n###|$)`, 'i'),
+                new RegExp(`###\\s*\\S+\\s*${heading}\\s*\\n([\\s\\S]*?)(?=\\n###|$)`, 'i')
+              ];
+              for (const regex of patterns) {
+                const match = body.match(regex);
+                if (match) return match[1].trim();
+              }
+              return '';
+            }
+
+            // Helper: parse bullet list
+            function parseBulletList(text) {
+              if (!text || text === '_No response_') return [];
+              return text
+                .split('\n')
+                .map(l => l.replace(/^[-*]\s*/, '').trim())
+                .filter(l => l.length > 0 && l !== '_No response_');
+            }
+
+            // Helper: parse milestones
+            function parseMilestones(text) {
+              if (!text || text === '_No response_') return [];
+              return text
+                .split('\n')
+                .map(l => l.trim())
+                .filter(l => l.includes('|'))
+                .map(l => {
+                  const parts = l.replace(/^[-*]\s*/, '').split('|').map(p => p.trim());
+                  return {
+                    name: parts[0] || '',
+                    date: parts[1] || '',
+                    status: parts[2] || 'planned'
+                  };
+                })
+                .filter(m => m.name);
+            }
+
+            // Helper: extract image URLs from markdown
+            function parseScreenshots(text) {
+              if (!text || text === '_No response_') return [];
+              const imgRegex = /!\[.*?\]\((.*?)\)/g;
+              const urls = [];
+              let match;
+              while ((match = imgRegex.exec(text)) !== null) {
+                urls.push(match[1]);
+              }
+              // Also match bare image URLs
+              const bareUrlRegex = /https:\/\/\S+\.(?:png|jpg|jpeg|gif|webp|svg)/gi;
+              while ((match = bareUrlRegex.exec(text)) !== null) {
+                if (!urls.includes(match[0])) urls.push(match[0]);
+              }
+              return urls;
+            }
+
+            // Helper: get single-line value
+            function parseValue(body, heading) {
+              const text = parseSection(body, heading);
+              if (!text || text === '_No response_') return '';
+              return text.split('\n')[0].trim();
+            }
+
+            // Build projects array
+            const projects = [];
+
+            for (const issue of projectIssues) {
+              const body = issue.body || '';
+              const title = issue.title.replace(/^📊\s*/, '').trim();
+
+              // Get comment data
+              let latestComment = null;
+              let commentCount = issue.comments || 0;
+              if (commentCount > 0) {
+                try {
+                  const lastPageComments = await github.rest.issues.listComments({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                    per_page: 100
+                  });
+                  if (lastPageComments.data.length > 0) {
+                    const last = lastPageComments.data[lastPageComments.data.length - 1];
+                    latestComment = {
+                      author: last.user.login,
+                      body: last.body.substring(0, 200),
+                      date: last.created_at.split('T')[0]
+                    };
+                  }
+                } catch (e) {
+                  console.log(`Could not fetch comments for issue #${issue.number}: ${e.message}`);
+                }
+              }
+
+              // Determine priority from priority order
+              const prioIndex = priorityOrder.findIndex(p =>
+                p.toLowerCase() === title.toLowerCase()
+              );
+              const priority = prioIndex >= 0 ? prioIndex + 1 : 999;
+
+              // Parse labels for metadata
+              const labels = issue.labels.map(l => l.name);
+              const hasExtRoadmap = labels.includes('ext-roadmap');
+              const isInternal = labels.includes('internal');
+              const freqLabel = labels.find(l => l.startsWith('freq:'));
+
+              // Parse issue body fields
+              const status = parseValue(body, 'Status') || 'on-track';
+              const visibility = parseValue(body, 'Visibility') || (isInternal ? 'internal' : 'public');
+              const extRoadmapField = parseValue(body, 'External Roadmap');
+              const externalRoadmap = hasExtRoadmap || extRoadmapField === 'Yes';
+              const updateFreqField = parseValue(body, 'Update Frequency');
+              const updateFrequency = freqLabel ? freqLabel.replace('freq:', '') : (updateFreqField || 'monthly');
+
+              const id = title.toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-|-$/g, '');
+
+              projects.push({
+                id,
+                name: title,
+                team: parseValue(body, 'Team') || '',
+                engLead: parseValue(body, 'Eng Lead') || 'TBD',
+                pmLead: parseValue(body, 'PM Lead') || 'TBD',
+                prioritySetBy: 'Justin Bettencourt',
+                visibility: visibility,
+                externalRoadmap: externalRoadmap,
+                updateFrequency: updateFrequency,
+                priority: priority,
+                status: status,
+                updatedAt: issue.updated_at.split('T')[0],
+                summary: parseValue(body, 'Summary') || '',
+                valueDelivered: parseBulletList(parseSection(body, 'Value Delivered')),
+                impacts: parseBulletList(parseSection(body, 'Customer Impacts')),
+                risks: parseBulletList(parseSection(body, 'Blockers & Risks')),
+                helpNeeded: parseBulletList(parseSection(body, 'Help Needed')),
+                milestones: parseMilestones(parseSection(body, 'Milestones')),
+                screenshots: parseScreenshots(parseSection(body, 'Screenshots & Attachments')),
+                issueNumber: issue.number,
+                issueUrl: issue.html_url,
+                commentCount: commentCount,
+                latestComment: latestComment
+              });
+            }
+
+            // Sort by priority
+            projects.sort((a, b) => a.priority - b.priority);
+
+            const data = {
+              lastUpdated: new Date().toISOString().split('T')[0],
+              generatedFrom: 'github-issues',
+              projects: projects
+            };
+
+            fs.writeFileSync('reporting/data/projects.json', JSON.stringify(data, null, 2) + '\n');
+            console.log(`Generated projects.json with ${projects.length} projects`);
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reporting/data/projects.json
+          if git diff --cached --quiet; then
+            echo "No changes to projects.json"
+          else
+            git commit -m "Auto-update projects.json from GitHub Issues"
+            git push
+          fi

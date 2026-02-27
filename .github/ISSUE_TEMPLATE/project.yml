@@ -1,0 +1,114 @@
+name: "📊 New Project"
+description: "Create a new project for the status dashboard"
+title: "📊 "
+labels: ["project-status"]
+body:
+  - type: input
+    id: team
+    attributes:
+      label: Team
+      description: "Which team owns this project?"
+      placeholder: "e.g., Azure SDK Tools, Cross-Language, Python"
+    validations:
+      required: true
+  - type: input
+    id: eng-lead
+    attributes:
+      label: Eng Lead
+      description: "Engineering lead name"
+      placeholder: "e.g., Laurent Mazuel"
+    validations:
+      required: true
+  - type: input
+    id: pm-lead
+    attributes:
+      label: PM Lead
+      description: "PM lead name"
+      placeholder: "e.g., Ronnie Geraghty"
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      options:
+        - on-track
+        - at-risk
+        - needs-attention
+    validations:
+      required: true
+  - type: dropdown
+    id: visibility
+    attributes:
+      label: Visibility
+      description: "Is this an internal or public-facing project?"
+      options:
+        - public
+        - internal
+    validations:
+      required: true
+  - type: dropdown
+    id: external-roadmap
+    attributes:
+      label: External Roadmap
+      description: "Should this appear on the Core AI Marketing Road Report?"
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true
+  - type: dropdown
+    id: update-frequency
+    attributes:
+      label: Update Frequency
+      description: "How often should this project be updated?"
+      options:
+        - monthly
+        - biweekly
+        - weekly
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: "One-line description of the project"
+      placeholder: "Evolving TypeSpec to support broader API description scenarios across Azure services."
+    validations:
+      required: true
+  - type: textarea
+    id: value-delivered
+    attributes:
+      label: "🚀 Value Delivered"
+      description: "Features released, milestones hit, customer value shipped (one per line)"
+      placeholder: "- Feature X shipped to preview\n- Milestone Y completed"
+  - type: textarea
+    id: impacts
+    attributes:
+      label: "📈 Customer Impacts"
+      description: "How has recent work affected customers? (one per line)"
+      placeholder: "- Reduced latency by 30% for Storage users"
+  - type: textarea
+    id: risks
+    attributes:
+      label: "⚠️ Blockers & Risks"
+      description: "What's blocking progress or at risk? (one per line)"
+      placeholder: "- Blocked on partner team alignment"
+  - type: textarea
+    id: help-needed
+    attributes:
+      label: "🙋 Help Needed"
+      description: "Specific asks for leadership (one per line)"
+      placeholder: "- Need executive support for cross-team alignment"
+  - type: textarea
+    id: milestones
+    attributes:
+      label: "📅 Milestones"
+      description: "Key milestones with dates and status (one per line: name | date | status)"
+      placeholder: "Public Preview | 2026-05-15 | planned\nGA Release | 2026-08-01 | planned"
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "📸 Screenshots & Attachments"
+      description: "Paste screenshots or attach files here. These will appear on the dashboard."
+      placeholder: "Drag and drop images here, or paste from clipboard"

@@ -16,6 +16,7 @@ This document codifies the operating model for the Azure SDK Project Status Dash
 - Priority is informed by input from LT: **Peter, Mayuri, Lori, and Samer**.
 - Each project's priority is recorded in the `prioritySetBy` field in `projects.json`.
 - Priority reflects **strategic importance to the org**, not just urgency or recency.
+- Priority is managed via a pinned "🏆 Project Priority Order" issue. Justin edits this issue to reorder projects. The list is a simple numbered ranking — line 1 is the highest priority.
 
 ## Ownership
 
@@ -25,15 +26,27 @@ This document codifies the operating model for the Azure SDK Project Status Dash
 
 ## How to Update Your Project
 
-There are two ways to submit a status update:
+Each project is a **GitHub Issue** in this repo. The issue body is a structured form — no JSON or Git knowledge required.
 
-1. **Recommended — GitHub Issue Form**
-   Fill out a structured form in this repo. A GitHub Action will automatically update `projects.json`. No Git or JSON knowledge required.
+### Updating an existing project
+1. Find your project's issue (labeled `project-status`)
+2. Click **Edit** on the issue body
+3. Update the relevant fields (status, value delivered, blockers, etc.)
+4. Save — the dashboard updates automatically within minutes
 
-2. **Alternative — Direct Edit via PR**
-   Edit `data/projects.json` directly using GitHub's web editor and submit a pull request. A PR template with a checklist will guide you through the required fields.
+### Adding a new project
+1. [Create a new issue](../../issues/new?template=project.yml) using the "📊 New Project" template
+2. Fill out all required fields
+3. Ask the report owner to add your project to the priority order
 
-**Guidance on content:** Updates should be **customer-focused** — what value was delivered, what blockers exist, and where leadership help is needed. These are not engineering task lists.
+### Removing a project
+Close the project's issue. It will disappear from the dashboard.
+
+### Screenshots & Attachments
+Paste screenshots directly into the issue body's "Screenshots & Attachments" section. They will render on the dashboard.
+
+### Commenting / Discussion
+Leadership and team members can comment directly on any project issue. The dashboard shows the comment count and latest comment for each project.
 
 ## Quarterly Live Check-ins
 

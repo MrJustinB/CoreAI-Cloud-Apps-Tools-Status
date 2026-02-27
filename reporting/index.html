@@ -338,6 +338,70 @@
       color: var(--color-muted);
       font-size: 0.75rem;
     }
+
+    .issue-link {
+      color: var(--color-muted);
+      font-size: 0.75rem;
+      text-decoration: none;
+    }
+
+    .issue-link:hover {
+      text-decoration: underline;
+    }
+
+    .discuss-link {
+      color: var(--color-muted);
+      font-size: 0.75rem;
+      text-decoration: none;
+    }
+
+    .discuss-link:hover {
+      text-decoration: underline;
+    }
+
+    .comment-section {
+      margin-top: 0.5rem;
+    }
+
+    .comment-section a {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      text-decoration: none;
+    }
+
+    .comment-section a:hover {
+      text-decoration: underline;
+    }
+
+    .comment-preview {
+      background: #f0f1f3;
+      font-size: 0.78rem;
+      color: var(--color-muted);
+      border-radius: 6px;
+      padding: 0.4rem 0.6rem;
+      margin-top: 0.35rem;
+      margin-left: 0.75rem;
+      max-height: 3.5rem;
+      overflow: hidden;
+      line-height: 1.4;
+    }
+
+    .screenshots {
+      margin-top: 0.5rem;
+    }
+
+    .screenshots summary {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      cursor: pointer;
+    }
+
+    .screenshots img {
+      max-width: 100%;
+      border-radius: 6px;
+      margin: 0.25rem 0;
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -430,10 +494,39 @@
       return div.innerHTML;
     }
 
+    function truncate(str, len) {
+      if (!str) return '';
+      return str.length > len ? str.slice(0, len) + '…' : str;
+    }
+
+    function renderCommentSection(project) {
+      if (!project.commentCount || project.commentCount <= 0) return '';
+      const issueUrl = project.issueUrl ? escapeHtml(project.issueUrl) : '#';
+      let html = `<div class="comment-section">`;
+      html += `<a href="${issueUrl}" target="_blank" rel="noopener">💬 ${project.commentCount} comment(s)</a>`;
+      if (project.latestComment) {
+        const author = escapeHtml(project.latestComment.author || '');
+        const body = escapeHtml(truncate(project.latestComment.body, 100));
+        html += `<div class="comment-preview">${author}: ${body}</div>`;
+      }
+      html += `</div>`;
+      return html;
+    }
+
+    function renderScreenshots(project) {
+      if (!project.screenshots || project.screenshots.length === 0) return '';
+      const count = project.screenshots.length;
+      let imgs = project.screenshots.map(url => `<img src="${escapeHtml(url)}" alt="Screenshot" loading="lazy">`).join('');
+      return `<details class="screenshots"><summary>📸 ${count} screenshot(s)</summary>${imgs}</details>`;
+    }
+
     function renderProject(project) {
       const statusClass = project.status || 'on-track';
       const statusText = STATUS_LABELS[statusClass] || statusClass;
       const stale = isStale(project);
+      const issueUrl = project.issueUrl ? escapeHtml(project.issueUrl) : '';
+      const issueLinkHtml = issueUrl ? `<a class="issue-link" href="${issueUrl}" target="_blank" rel="noopener">🔗</a>` : '';
+      const discussLinkHtml = issueUrl ? `<a class="discuss-link" href="${issueUrl}" target="_blank" rel="noopener">💬 Discuss</a>` : '';
 
       return `
         <article class="project-card">
@@ -442,6 +535,8 @@
             <h2>${escapeHtml(project.name)}</h2>
             <span class="status-label ${statusClass}">${statusText}</span>
             ${stale ? '<span class="badge stale">⏰ STALE</span>' : ''}
+            ${discussLinkHtml}
+            ${issueLinkHtml}
           </div>
           <p class="team-label">${escapeHtml(project.team)}</p>
           ${(project.engLead && project.engLead !== 'TBD') || (project.pmLead && project.pmLead !== 'TBD') ? `<p class="leads-label">Eng: ${escapeHtml(project.engLead)} · PM: ${escapeHtml(project.pmLead)}</p>` : ''}
@@ -468,7 +563,9 @@
               ${renderList(project.helpNeeded, 'No help needed right now.')}
             </div>
           </div>
+          ${renderScreenshots(project)}
           <p class="updated-at">Last updated: ${escapeHtml(project.updatedAt)} · Updates: ${escapeHtml(project.updateFrequency || 'N/A')}</p>
+          ${renderCommentSection(project)}
         </article>
       `;
     }
