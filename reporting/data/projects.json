@@ -3,6 +3,52 @@
   "generatedFrom": "github-issues",
   "projects": [
     {
+      "id": "typespec-evolution",
+      "name": "TypeSpec Evolution",
+      "team": "Azure SDK Tools",
+      "engLead": "Laurent Mazuel",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "monthly",
+      "priority": 1,
+      "status": "on-track",
+      "updatedAt": "2026-02-27",
+      "summary": "Evolving TypeSpec to support broader API description scenarios across Azure services.",
+      "valueDelivered": [
+        "TypeSpec-to-OpenAPI v3.1 converter shipped to Azure Storage team",
+        "New onboarding guide reduced partner ramp-up by 75%"
+      ],
+      "impacts": [
+        "Reduced API onboarding time from 4 weeks to 1 week for 12 partner teams",
+        "3 new Azure services adopted TypeSpec this quarter"
+      ],
+      "risks": [
+        "Dependency on partner team bandwidth for migration — need executive alignment"
+      ],
+      "helpNeeded": [
+        "Executive support to prioritize partner team migration timelines"
+      ],
+      "milestones": [
+        {
+          "name": "OpenAPI v3.1 converter GA",
+          "date": "2026-04-15",
+          "status": "in-progress"
+        },
+        {
+          "name": "Full data-plane migration",
+          "date": "2026-07-01",
+          "status": "planned"
+        }
+      ],
+      "screenshots": [],
+      "issueNumber": 1,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/1",
+      "commentCount": 0,
+      "latestComment": null
+    },
+    {
       "id": "azure-sdk-ai-agent-integration",
       "name": "Azure SDK AI Agent Integration",
       "team": "Cross-Language",
@@ -45,6 +91,48 @@
       "screenshots": [],
       "issueNumber": 2,
       "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/2",
+      "commentCount": 0,
+      "latestComment": null
+    },
+    {
+      "id": "sdk-performance-improvements",
+      "name": "SDK Performance Improvements",
+      "team": ".NET / Java",
+      "engLead": "TBD",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": false,
+      "updateFrequency": "monthly",
+      "priority": 3,
+      "status": "on-track",
+      "updatedAt": "2026-02-27",
+      "summary": "Systematic performance improvements across .NET and Java SDKs for high-throughput scenarios.",
+      "valueDelivered": [
+        "New connection pooling shipped in .NET SDK — 2x throughput for Storage clients",
+        "Event Hubs Java SDK hot-path optimization released in v5.18"
+      ],
+      "impacts": [
+        "P95 latency reduced by 30% in Azure Storage .NET SDK",
+        "Java SDK memory allocation cut by 40% in Event Hubs hot path"
+      ],
+      "risks": [],
+      "helpNeeded": [],
+      "milestones": [
+        {
+          "name": "Connection pooling benchmarks",
+          "date": "2026-03-15",
+          "status": "upcoming"
+        },
+        {
+          "name": "v5.19 Java SDK release",
+          "date": "2026-04-01",
+          "status": "planned"
+        }
+      ],
+      "screenshots": [],
+      "issueNumber": 3,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/3",
       "commentCount": 0,
       "latestComment": null
     },
@@ -179,6 +267,31 @@
       "screenshots": [],
       "issueNumber": 7,
       "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/7",
+      "commentCount": 0,
+      "latestComment": null
+    },
+    {
+      "id": "github-copilot-for-azure",
+      "name": "GitHub Copilot for Azure",
+      "team": "Kay's Team",
+      "engLead": "Kay",
+      "pmLead": "TBD",
+      "prioritySetBy": "Justin Bettencourt",
+      "visibility": "public",
+      "externalRoadmap": true,
+      "updateFrequency": "monthly",
+      "priority": 8,
+      "status": "on-track",
+      "updatedAt": "2026-02-27",
+      "summary": "VS Code extension and CLI plugin for Azure-focused Copilot experiences. Source in ADO.",
+      "valueDelivered": [],
+      "impacts": [],
+      "risks": [],
+      "helpNeeded": [],
+      "milestones": [],
+      "screenshots": [],
+      "issueNumber": 8,
+      "issueUrl": "https://github.com/MrJustinB/CoreAI-Cloud-Apps-Tools-Status/issues/8",
       "commentCount": 0,
       "latestComment": null
     },
