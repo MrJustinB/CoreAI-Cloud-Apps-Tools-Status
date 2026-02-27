@@ -667,7 +667,8 @@
       const error = document.getElementById('error');
 
       try {
-        const response = await fetch('data/projects.json');
+        const cacheBuster = Date.now();
+        const response = await fetch(`data/projects.json?_=${cacheBuster}`);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
 
